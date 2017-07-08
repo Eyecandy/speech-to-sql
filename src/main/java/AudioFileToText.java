@@ -25,14 +25,14 @@ import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import com.google.protobuf.ByteString;
 
 
-
+import javax.swing.text.html.HTMLDocument;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 public class AudioFileToText {
-    public static void convert() throws Exception {
+    public static String convert() throws Exception {
         System.out.println("Converting from speech to text wait a moment...");
         // Instantiates a client
         SpeechClient speech = SpeechClient.create();
@@ -58,15 +58,18 @@ public class AudioFileToText {
         // Performs speech recognition on the audio file
         RecognizeResponse response = speech.recognize(config, audio);
         List<SpeechRecognitionResult> results = response.getResultsList();
-
+        String s = "";
         for (SpeechRecognitionResult result: results) {
             List<SpeechRecognitionAlternative> alternatives = result.getAlternativesList();
             for (SpeechRecognitionAlternative alternative: alternatives) {
                 System.out.printf("Transcription: %s%n", alternative.getTranscript());
+                s += alternative.getTranscript().toString();
 
             }
         }
+
         speech.close();
+        return s;
     }
 }
 // [END speech_quickstart]

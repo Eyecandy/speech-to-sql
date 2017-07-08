@@ -6,8 +6,19 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        /*
+        Analyze analyze = new Analyze();
+        List<Token> tokens =  analyze.analyzeSyntaxText("give me bob");
+        for (Token t: tokens) {
+            System.out.println(t);
 
-        System.out.println("Starting Application...");
+        }
+        */
+        ManualAnalyzer manualAnalyze = new ManualAnalyzer();
+        manualAnalyze.analyze("give me bob from users");
+
+
+
         while (true) {
             System.out.println("Type in 's' to start the voice recording");
             Scanner sc = new Scanner(System.in);

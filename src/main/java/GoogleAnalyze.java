@@ -48,19 +48,19 @@ public class GoogleAnalyze {
         boolean colNotFound = true;
         boolean tableFound = false;
 
-        AtomicBoolean goIn = new AtomicBoolean(false);
+        AtomicBoolean goIn1 = new AtomicBoolean(false);
         AtomicBoolean goIn2 = new AtomicBoolean(false);
         Iterator<Token> iter = response.iterator();
         while (iter.hasNext()) {
             String s = "";
             Token item = iter.next();
             System.out.println(item.getText().getContent());
-            System.out.println("MAIN: "+item.getLemma() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
-           .getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
+            //System.out.println("MAIN: "+item.getLemma() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
+           //.getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
             int tagVal =item.getPartOfSpeech().getTagValue();
             if (!firstVerbFound && tagVal == verbTagVal) {
                 firstVerbFound = true;
-                String obj1 = findNextObject1(iter,goIn,s);
+                String obj1 = findNextObject1(iter,goIn1,s);
                 if (obj1 == null) {
                     return results;
                 }
@@ -68,25 +68,28 @@ public class GoogleAnalyze {
                 results.put("obj",obj1);
             }
 
-            else if ((tagVal == 2|| goIn.get()) && colNotFound) {
-                if (goIn.get()) {
+            else if ((tagVal == 2|| goIn1.get()) && colNotFound && firstVerbFound) {
+
+                if (goIn1.get()) {
                     if (tagVal == 6 || item.getDependencyEdge().getLabelValue() == amodVal) {
                         s = item.getText().getContent()+" ";
                     }
                 }
-
                 String col =findNextObject1(iter,goIn2,s);
                 if (col == null) {
                     return results;
                 }
+
+                goIn1.set(false);
                 colNotFound= false;
                 results.put("col",col);
             }
-            else if ((tagVal== 2|| goIn2.get())  && !tableFound ) {
+            else if ((tagVal== 2|| goIn2.get())  && !tableFound  && firstVerbFound) {
                 if (tagVal == 6 || item.getDependencyEdge().getLabelValue() == amodVal) {
                     s = item.getText().getContent()+" ";
                 }
-                String table =findNextObject1(iter,goIn,s);
+
+                String table =findNextObject1(iter,goIn2,s);
 
                 if (table == null) {
                     return results;
@@ -109,18 +112,23 @@ public class GoogleAnalyze {
         boolean firstNounFound = false;
         while (iter.hasNext()  ) {
             Token item = iter.next();
-            System.out.println("HELPER: "+item.getText().getContent() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
-                    .getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
+
+            //System.out.println("HELPER: "+item.getText().getContent() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
+                    //.getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
             int depEdgeLabel = item.getDependencyEdge().getLabelValue();
             int tagVal = item.getPartOfSpeech().getTagValue();
-            if (!firstNounFound) {
-                if (tagVal == nounVal || depEdgeLabel == amodVal || tagVal == numVal) {
+            if (!firstNounFound && s.length() ==0) {
+
+                if (tagVal == nounVal || depEdgeLabel == amodVal ) {
+
                     s+=item.getText().getContent()+" ";
                     firstNounFound = true;
                 }
             }
-            else if (firstNounFound) {
+            else if (firstNounFound || s.length() != 0) {
+
                 if (tagVal == nounVal) {
+
                     s+=item.getText().getContent();
                 }
                 else {

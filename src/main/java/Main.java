@@ -11,7 +11,7 @@ public class Main {
 
         ManualAnalyzer manualAnalyze = new ManualAnalyzer();
         GoogleAnalyze googleAnalyze = new GoogleAnalyze();
-        googleAnalyze.analyzeSyntaxText("fetch above 81");
+        googleAnalyze.analyzeSyntaxText("search for name block in grey List from fast Table");
 
         //System.out.println(manualAnalyze.analyze("fetch Peter from noobs in l loops"));
         while (true) {

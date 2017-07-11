@@ -48,6 +48,9 @@ public class ManualAnalyzer {
 
     public HashMap<String, String> analyze(String naturalText) {
         String splitNaturalText = findVerbAndSeparate(naturalText);
+        if (splitNaturalText.length() == naturalText.length())  {
+            return null;
+        }
         String doubleSplitNaturalText = findPreposition(splitNaturalText);
         findPrepositionNo2(doubleSplitNaturalText);
         return results;

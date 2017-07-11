@@ -1,3 +1,5 @@
+import com.sun.tools.javac.parser.Tokens;
+
 import java.util.Scanner;
 
 /**
@@ -8,8 +10,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         ManualAnalyzer manualAnalyze = new ManualAnalyzer();
-        //System.out.println(manualAnalyze.analyze("fetch Peter from noobs in l loops"));
+        GoogleAnalyze googleAnalyze = new GoogleAnalyze();
+        googleAnalyze.analyzeSyntaxText("fetch above 81");
 
+        //System.out.println(manualAnalyze.analyze("fetch Peter from noobs in l loops"));
         while (true) {
             manualAnalyze.resetResults();
             System.out.println("Type in 's' to start the voice recording");
@@ -19,7 +23,6 @@ public class Main {
                 JavaSoundRecorder.startRecording();
                 String speech = AudioFileToText.convert();
                 System.out.println(manualAnalyze.analyze(speech));
-
             }
             else {
                 System.out.println("Invalid Command");

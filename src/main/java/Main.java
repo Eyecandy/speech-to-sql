@@ -1,3 +1,10 @@
+import analyzers.GoogleAnalyze;
+import analyzers.ManualAnalyzer;
+import analyzers.NumberAnalyzer;
+import audio.utils.JavaSoundRecorder;
+import audio.utils.AudioFileToText;
+import utils.RegEx;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;

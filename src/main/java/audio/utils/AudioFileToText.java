@@ -1,4 +1,4 @@
-/*
+package audio.utils;/*
   Copyright 2017, Google Inc.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -23,9 +23,6 @@ import com.google.cloud.speech.v1.SpeechClient;
 import com.google.cloud.speech.v1.SpeechRecognitionAlternative;
 import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import com.google.protobuf.ByteString;
-
-
-import javax.swing.text.html.HTMLDocument;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

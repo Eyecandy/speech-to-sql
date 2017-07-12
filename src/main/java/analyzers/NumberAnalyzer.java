@@ -1,4 +1,6 @@
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+package analyzers;
+
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,20 +14,20 @@ public class NumberAnalyzer {
     private HashSet<String> keywordLesser = new HashSet<>();
     private HashSet<String> keywordEqual = new HashSet<>();
     private HashSet<String> keyWordAll = new HashSet<>();
-    NumberAnalyzer() {
+    public NumberAnalyzer() {
        createKeyWordsLesser();
        createKeyWordsLarger();
        createEqual();
        createAll();
     }
-    public void createAll() {
+    private void createAll() {
         keyWordAll.add("anyone");
         keyWordAll.add("all");
         keyWordAll.add("everyone");
         keyWordAll.add("everything");
 
     }
-     public void createEqual(){
+     private void createEqual(){
         keywordEqual.add("same");
         keywordEqual.add("equally");
         keywordEqual.add("equal");
@@ -34,7 +36,7 @@ public class NumberAnalyzer {
         keywordEqual.add("exactly");
     }
 
-    public void createKeyWordsLesser() {
+    private void createKeyWordsLesser() {
         keywordLesser.add("less");
         keywordLesser.add("below");
         keywordLesser.add("smaller");
@@ -64,7 +66,7 @@ public class NumberAnalyzer {
         findObj(speech,verbsArrayList,result,firstTime);
         return result;
     }
-    public void findObj(String speech,ArrayList<String> verbsArrayList,HashMap<String,String> result,boolean firstTime ) {
+    private void findObj(String speech,ArrayList<String> verbsArrayList,HashMap<String,String> result,boolean firstTime ) {
         boolean resultSetHasBeenUpdated = false;
         for (String s: result.keySet()) {
             if (s.equals("show")) {continue;}
@@ -89,7 +91,7 @@ public class NumberAnalyzer {
             }
         }
     }
-    public void findNumbers(String speech,HashSet<String> verbs,HashMap<String,String> result,HashSet<String> keyword,String obj,String l) {
+    private void findNumbers(String speech,HashSet<String> verbs,HashMap<String,String> result,HashSet<String> keyword,String obj,String l) {
         String toPutIn = "";
         for (String s: keyword) {
            String[] lst = speech.split(s);
@@ -106,7 +108,7 @@ public class NumberAnalyzer {
                            toPutIn = toPutIn+"=";
                        }
                    }
-                   else if (RegEx.containsNumber(lst2[i])) {
+                   else if (utils.RegEx.containsNumber(lst2[i])) {
                        toPutIn += " "+word;
                        result.put(obj,toPutIn);
                        break;
@@ -115,7 +117,7 @@ public class NumberAnalyzer {
            }
        }
     }
-    public void updateTableOrColumn(String speech, HashMap<String,String>result) {
+    private void updateTableOrColumn(String speech, HashMap<String,String>result) {
         boolean foundPrep1 = false;
         boolean foundPrep2 = false;
         boolean open = true;

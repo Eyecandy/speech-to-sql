@@ -1,3 +1,5 @@
+package audio.utils;
+
 import javax.sound.sampled.*;
 import java.io.*;
 
@@ -35,7 +37,7 @@ public class JavaSoundRecorder {
     /**
      * Captures the sound and record into a WAV file
      */
-    void start() {
+    private void start() {
         try {
             AudioFormat format = getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
@@ -63,7 +65,7 @@ public class JavaSoundRecorder {
     /**
      * Closes the target data line to finish capturing and recording
      */
-    void finish() {
+    private void finish() {
         line.stop();
         line.close();
         System.out.println("Finished");

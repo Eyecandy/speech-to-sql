@@ -1,3 +1,5 @@
+package analyzers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ public class ManualAnalyzer {
         return verbsArray;
     }
 
-    ManualAnalyzer() {
+    public ManualAnalyzer() {
         createNaturalSelects();
         createTablesAndColumnsSearc();
         results.put("obj", null);

@@ -1,3 +1,5 @@
+package analyzers;
+
 import com.google.cloud.language.v1.AnalyzeSyntaxRequest;
 import com.google.cloud.language.v1.AnalyzeSyntaxResponse;
 import com.google.cloud.language.v1.Document;
@@ -14,9 +16,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GoogleAnalyze {
-
-
-
     public HashMap<String, String> analyzeSyntaxText(String text) throws IOException {
 
         try (LanguageServiceClient languageServiceClient = LanguageServiceClient.create()) {
@@ -105,13 +104,13 @@ public class GoogleAnalyze {
             int tagVal = item.getPartOfSpeech().getTagValue();
             if (!firstNounFound && s.length() ==0) {
                 if (tagVal == nounVal || depEdgeLabel == amodVal) {
-                    s+=item.getText().getContent()+" ";
+                    s+=item.getText().getContent();
                     firstNounFound = true;
                 }
             }
             else if (firstNounFound || s.length() != 0) {
                 if (tagVal == nounVal) {
-                    s+=item.getText().getContent();
+                    s+=" "+item.getText().getContent();
                 }
                 else {
                     if (item.getPartOfSpeech().getTagValue() == 2) {

@@ -17,7 +17,7 @@ public class GoogleAnalyze {
 
 
 
-    public List<Token> analyzeSyntaxText(String text) throws IOException {
+    public HashMap<String, String> analyzeSyntaxText(String text) throws IOException {
 
         try (LanguageServiceClient languageServiceClient = LanguageServiceClient.create()) {
             Document doc = Document.newBuilder()
@@ -27,8 +27,7 @@ public class GoogleAnalyze {
                     .setEncodingType(EncodingType.UTF16).build();
             AnalyzeSyntaxResponse response = languageServiceClient.analyzeSyntax(request);
             System.out.println(getResults(response.getTokensList()));
-
-            return response.getTokensList();
+            return getResults(response.getTokensList());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,9 +53,6 @@ public class GoogleAnalyze {
         while (iter.hasNext()) {
             String s = "";
             Token item = iter.next();
-            System.out.println(item.getText().getContent());
-            //System.out.println("MAIN: "+item.getLemma() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
-           //.getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
             int tagVal =item.getPartOfSpeech().getTagValue();
             if (!firstVerbFound && tagVal == verbTagVal) {
                 firstVerbFound = true;
@@ -88,69 +84,49 @@ public class GoogleAnalyze {
                 if (tagVal == 6 || item.getDependencyEdge().getLabelValue() == amodVal) {
                     s = item.getText().getContent()+" ";
                 }
-
                 String table =findNextObject1(iter,goIn2,s);
-
                 if (table == null) {
                     return results;
                 }
-
                 tableFound = true;
                 results.put("table",table);
-
             }
-
         }
         return results;
     }
-
     public static String findNextObject1(Iterator<Token> iter,AtomicBoolean goIn,String s) {
         int amodVal = 5;
         int nounVal = 6;
-        int numVal = 7;
 
         boolean firstNounFound = false;
         while (iter.hasNext()  ) {
             Token item = iter.next();
-
-            //System.out.println("HELPER: "+item.getText().getContent() + " " + item.getPartOfSpeech().getTag()+ " "+item.getPartOfSpeech().getTagValue() + " " +item
-                    //.getDependencyEdge().getLabel() + " "+item.getDependencyEdge().getLabelValue());
             int depEdgeLabel = item.getDependencyEdge().getLabelValue();
             int tagVal = item.getPartOfSpeech().getTagValue();
             if (!firstNounFound && s.length() ==0) {
-
-                if (tagVal == nounVal || depEdgeLabel == amodVal ) {
-
+                if (tagVal == nounVal || depEdgeLabel == amodVal) {
                     s+=item.getText().getContent()+" ";
                     firstNounFound = true;
                 }
             }
             else if (firstNounFound || s.length() != 0) {
-
                 if (tagVal == nounVal) {
-
                     s+=item.getText().getContent();
                 }
                 else {
                     if (item.getPartOfSpeech().getTagValue() == 2) {
                         goIn.set(true);
                     }
-
                     break;
                 }
-
             }
         }
         if (s.length() ==0) {
             return null;
         }
         else {
-
             return s;
         }
-
-
-
     }
 
 

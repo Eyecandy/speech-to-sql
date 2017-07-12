@@ -6,11 +6,14 @@ import java.util.HashSet;
  * Created by joakimnilfjord on 7/8/2017 AD.
  */
 public class ManualAnalyzer {
-    HashSet<String> verbs = new HashSet<>();
-    HashSet<String> prepositions = new HashSet<>();
-    HashSet<String> keyWords = new HashSet<>();
-    HashMap<String, String> results = new HashMap<>();
+    private HashSet<String> verbs = new HashSet<>();
+    private HashSet<String> prepositions = new HashSet<>();
+    private HashMap<String, String> results = new HashMap<>();
+    private  ArrayList<String> verbsArray = new ArrayList<>();
 
+    public ArrayList<String> getVerbsArray() {
+        return verbsArray;
+    }
 
     ManualAnalyzer() {
         createNaturalSelects();
@@ -21,14 +24,31 @@ public class ManualAnalyzer {
     }
 
     public void createNaturalSelects() {
-        verbs.add("give me ");
-        verbs.add("fetch ");
+        verbs.add("find me a ");
         verbs.add("search for ");
+        verbs.add("fetch me ");
+        verbs.add("fetch us ");
+        verbs.add("get me ");
+        verbs.add("give me ");
+        verbs.add("find a ");
+        verbs.add("fetch ");
         verbs.add("find ");
-        verbs.add("find me");
-        verbs.add("get me");
         verbs.add("get ");
         verbs.add("search ");
+        verbsArray.add("find me a ");
+        verbsArray.add("search for ");
+        verbsArray.add("fetch me ");
+        verbsArray.add("find every ");
+        verbsArray.add("find all ");
+        verbsArray.add("fetch us ");
+        verbsArray.add("find me ");
+        verbsArray.add("get me ");
+        verbsArray.add("give me ");
+        verbsArray.add("find a ");
+        verbsArray.add("fetch ");
+        verbsArray.add("find ");
+        verbsArray.add("get ");
+        verbsArray.add("search ");
     }
 
     public void createTablesAndColumnsSearc() {
@@ -40,10 +60,6 @@ public class ManualAnalyzer {
         results.put("obj",null);
         results.put("col",null);
         results.put("table",null);
-    }
-
-    public void createKeyWords() {
-
     }
 
     public HashMap<String, String> analyze(String naturalText) {
@@ -87,9 +103,7 @@ public class ManualAnalyzer {
         }
         return naturalText;
     }
-
     public void findPrepositionNo2(String naturalText) {
-
         String colVal = results.get("col");
         String objVal = results.get("obj");
         String tableVal = results.get("table");
@@ -125,8 +139,6 @@ public class ManualAnalyzer {
             }
         }
         else if (colVal == null && tableVal != null) {
-            System.out.println("col");
-
             if (inObj.length > 1) {
                 System.out.println("inObj");
                 results.put("obj",inObj[0]);
@@ -138,8 +150,8 @@ public class ManualAnalyzer {
                 results.put("col",fromObj[1]);
             }
         }
-
-
     }
-
+    public HashSet<String> getVerbs() {
+        return verbs;
+    }
 }

@@ -84,7 +84,7 @@ public class GoogleAnalyze {
 
                 if (goIn1.get()) {
                     if (tagVal == 6 || item.getDependencyEdge().getLabelValue() == amodVal) {
-                        s = item.getText().getContent()+" ";
+                        s = item.getLemma()+" ";
                     }
                 }
                 String col =findNextObject1(iter,goIn2,s);
@@ -98,7 +98,7 @@ public class GoogleAnalyze {
             }
             else if ((tagVal== 2|| goIn2.get())  && !tableFound  && firstVerbFound) {
                 if (tagVal == 6 || item.getDependencyEdge().getLabelValue() == amodVal) {
-                    s = item.getText().getContent()+" ";
+                    s = item.getLemma()+" ";
                 }
                 String table =findNextObject1(iter,goIn2,s);
                 if (table == null) {

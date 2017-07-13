@@ -27,10 +27,14 @@ public class ManualAnalyzer {
 
     public void createNaturalSelects() {
         verbs.add("find me a ");
+        verbs.add("find the ");
         verbs.add("search for ");
+        verbs.add("search for the ");
         verbs.add("fetch me ");
         verbs.add("fetch us ");
+        verbs.add("fetch the ");
         verbs.add("get me ");
+        verbs.add("get the ");
         verbs.add("give me ");
         verbs.add("find a ");
         verbs.add("fetch ");
@@ -38,11 +42,22 @@ public class ManualAnalyzer {
         verbs.add("get ");
         verbs.add("search ");
         verbsArray.add("find me a ");
+        verbsArray.add("search for any ");
+        verbsArray.add("search for all ");
+        verbsArray.add("search me all ");
+        verbsArray.add("give me all ");
+        verbsArray.add("give me any ");
+        verbsArray.add("give me anything ");
+        verbsArray.add("give me ");
         verbsArray.add("search for ");
         verbsArray.add("fetch me ");
+        verbsArray.add("find any ");
         verbsArray.add("find every ");
         verbsArray.add("find all ");
         verbsArray.add("fetch us ");
+        verbsArray.add("get the ");
+        verbsArray.add("fetch the ");
+        verbsArray.add("find the ");
         verbsArray.add("find me ");
         verbsArray.add("get me ");
         verbsArray.add("give me ");
@@ -50,6 +65,7 @@ public class ManualAnalyzer {
         verbsArray.add("fetch ");
         verbsArray.add("find ");
         verbsArray.add("get ");
+        verbsArray.add("give ");
         verbsArray.add("search ");
     }
 

@@ -42,7 +42,10 @@ public class NumberAnalyzer {
         keywordLesser.add("smaller");
         keywordLesser.add("younger");
         keywordLesser.add("lighter");
-        keywordLarger.add("lower");
+        keywordLesser.add("lower");
+        keywordLesser.add("lesser");
+        keywordLesser.add("shorter");
+
     }
     public void createKeyWordsLarger() {
         keywordLarger.add("above");
@@ -52,6 +55,9 @@ public class NumberAnalyzer {
         keywordLarger.add("older");
         keywordLarger.add("heavier");
         keywordLarger.add("taller");
+        keywordLarger.add("bigger");
+        keywordLarger.add("longer");
+
     }
     public HashMap<String,String> analyzer(String speech, ManualAnalyzer manualAnalyzer) {
         HashSet<String> verbs = manualAnalyzer.getVerbs();
@@ -64,7 +70,15 @@ public class NumberAnalyzer {
         findNumbers(speech,verbs,result,keywordLesser,"obj2","<");
         firstTime = false;
         findObj(speech,verbsArrayList,result,firstTime);
+        removeShow(result);
+
         return result;
+    }
+    private void removeShow(HashMap<String,String> result) {
+         String s = result.get("show");
+         if (keywordLarger.contains(s) || keywordLesser.contains(s)) {
+             result.put("show","all");
+         }
     }
     private void findObj(String speech,ArrayList<String> verbsArrayList,HashMap<String,String> result,boolean firstTime ) {
         boolean resultSetHasBeenUpdated = false;
@@ -103,9 +117,11 @@ public class NumberAnalyzer {
                    if (keywordEqual.contains(word)) {
                        if (l.equals(">")) {
                            toPutIn+="=";
+                           break;
                        }
                        else if (l.equals("<")){
                            toPutIn = toPutIn+"=";
+                           break;
                        }
                    }
                    else if (utils.RegEx.containsNumber(lst2[i])) {

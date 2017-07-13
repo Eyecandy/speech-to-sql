@@ -8,8 +8,14 @@ import java.io.*;
  * author: www.codejava.net
  */
 public class JavaSoundRecorder {
+
+
+    public void setRECORD_TIME(long RECORD_TIME) {
+        this.RECORD_TIME = RECORD_TIME;
+    }
+
     // record duration, in milliseconds
-    static final long RECORD_TIME = 12000;  // 1 minute
+    private static long RECORD_TIME = 10000;  // 1 minute
 
     // path of the wav file
     File wavFile = new File("/Users/joakimnilfjord/Desktop/RecordAudio.wav");

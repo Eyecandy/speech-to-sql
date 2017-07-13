@@ -70,7 +70,8 @@ public class NumberAnalyzer {
         findNumbers(speech,verbs,result,keywordLesser,"obj2","<");
         firstTime = false;
         findObj(speech,verbsArrayList,result,firstTime);
-        removeShow(result);
+
+        //removeShow(result);
 
         return result;
     }
@@ -107,27 +108,31 @@ public class NumberAnalyzer {
     }
     private void findNumbers(String speech,HashSet<String> verbs,HashMap<String,String> result,HashSet<String> keyword,String obj,String l) {
         String toPutIn = "";
+        boolean x = true;
+        boolean y = true;
         for (String s: keyword) {
+            if (!x) {break;}
            String[] lst = speech.split(s);
            if (lst.length == 2) {
                toPutIn+=l;
                String[] lst2 = lst[1].split(" ");
                for (int i = 0;i < lst2.length;i++) {
                    String word = lst2[i];
-                   if (keywordEqual.contains(word)) {
+                   if (keywordEqual.contains(word) && y) {
                        if (l.equals(">")) {
                            toPutIn+="=";
-                           break;
                        }
                        else if (l.equals("<")){
                            toPutIn = toPutIn+"=";
-                           break;
                        }
+                       y = false;
                    }
                    else if (utils.RegEx.containsNumber(lst2[i])) {
                        toPutIn += " "+word;
                        result.put(obj,toPutIn);
+                       x = false;
                        break;
+
                    }
                }
            }

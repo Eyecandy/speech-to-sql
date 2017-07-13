@@ -59,6 +59,8 @@ public class NumberAnalyzer {
         keywordLarger.add("longer");
 
     }
+
+
     public HashMap<String,String> analyzer(String speech, ManualAnalyzer manualAnalyzer) {
         HashSet<String> verbs = manualAnalyzer.getVerbs();
         ArrayList<String> verbsArrayList = manualAnalyzer.getVerbsArray();

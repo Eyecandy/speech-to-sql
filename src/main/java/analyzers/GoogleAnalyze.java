@@ -16,6 +16,23 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GoogleAnalyze {
+
+    public String analyzeSyntaxText2(String text) throws IOException {
+
+        try (LanguageServiceClient languageServiceClient = LanguageServiceClient.create()) {
+            Document doc = Document.newBuilder()
+                    .setContent(text).setType(Type.PLAIN_TEXT).build();
+            AnalyzeSyntaxRequest request = AnalyzeSyntaxRequest.newBuilder()
+                    .setDocument(doc)
+                    .setEncodingType(EncodingType.UTF16).build();
+            AnalyzeSyntaxResponse response = languageServiceClient.analyzeSyntax(request);
+
+            return response.getTokensList().get(0).getLemma().toString().toLowerCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public HashMap<String, String> analyzeSyntaxText(String text) throws IOException {
 
         try (LanguageServiceClient languageServiceClient = LanguageServiceClient.create()) {
@@ -104,13 +121,13 @@ public class GoogleAnalyze {
             int tagVal = item.getPartOfSpeech().getTagValue();
             if (!firstNounFound && s.length() ==0) {
                 if (tagVal == nounVal || depEdgeLabel == amodVal) {
-                    s+=item.getText().getContent();
+                    s+=item.getLemma();
                     firstNounFound = true;
                 }
             }
             else if (firstNounFound || s.length() != 0) {
                 if (tagVal == nounVal) {
-                    s+=" "+item.getText().getContent();
+                    s+=" "+item.getLemma();
                 }
                 else {
                     if (item.getPartOfSpeech().getTagValue() == 2) {

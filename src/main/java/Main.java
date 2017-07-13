@@ -21,29 +21,42 @@ public class Main {
             System.out.println("Type in 's' to start the voice recording or 't' to type in input");
             Scanner sc = new Scanner(System.in).useDelimiter("\n");
             String command = sc.next();
+            String speech = "";
             if (command.equals("s")){
                 JavaSoundRecorder.startRecording();
-                String speech = AudioFileToText.convert();
+                speech = AudioFileToText.convert();
                 getResult(speech,googleAnalyze,manualAnalyze,numberAnalyzer);
             }
             if (command.equals("t")) {
                 System.out.println("ask for something by typing...");
-                String speech = sc.next();
-                System.out.println(getResult(speech, googleAnalyze, manualAnalyze, numberAnalyzer));
+                speech = sc.next();
             }
             else {
                 System.out.println("Invalid Command");
             }
+            HashMap<String,String> result =getResult(speech, googleAnalyze, manualAnalyze, numberAnalyzer);
+            System.out.println(strip(result));
+
+
+
         }
     }
     public static HashMap<String, String> getResult(String speech, GoogleAnalyze googleAnalyze, ManualAnalyzer manualAnalyzer, NumberAnalyzer numberAnalyzer) throws IOException {
         if (RegEx.containsNumber(speech)) {
             System.out.println("number analyzer");
-            return numberAnalyzer.analyzer(speech,manualAnalyzer);
+
+            HashMap<String,String> result = numberAnalyzer.analyzer(speech,manualAnalyzer);
+            String n = googleAnalyze.analyzeSyntaxText2(result.get("show"));
+            result.put("obj",n);
+            return result;
+
         }
         else if (RegEx.containsEmail(speech)) {
             System.out.println("manual analyzer");
-            return manualAnalyzer.analyze(speech);
+            HashMap<String,String> result =manualAnalyzer.analyze(speech);
+            String n = googleAnalyze.analyzeSyntaxText2(result.get("show"));
+            result.put("show",n);
+            return result;
         }
         else {
             System.out.println("google analyzer");
@@ -51,4 +64,19 @@ public class Main {
             return googleAnalyze.analyzeSyntaxText(speech);
         }
     }
+    public static HashMap<String,String> strip(HashMap<String,String> result) {
+        for (String k:result.keySet()) {
+
+            String n = result.get(k);
+            if (n!=null) {
+                n = n.trim();
+                result.put(k,n);
+            }
+        }
+
+        return result;
+    }
+
+
+
 }

@@ -40,7 +40,7 @@ public class NumberAnalyzer {
         keywordLesser.add("less");
         keywordLesser.add("below");
         keywordLesser.add("smaller");
-        keywordLesser.add("younger");
+        keywordLesser.add("older");
         keywordLesser.add("lighter");
         keywordLesser.add("lower");
         keywordLesser.add("lesser");
@@ -52,7 +52,7 @@ public class NumberAnalyzer {
         keywordLarger.add("more");
         keywordLarger.add("larger");
         keywordLarger.add("greater");
-        keywordLarger.add("older");
+        keywordLarger.add("younger");
         keywordLarger.add("heavier");
         keywordLarger.add("taller");
         keywordLarger.add("bigger");

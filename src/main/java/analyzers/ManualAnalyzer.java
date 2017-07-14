@@ -52,6 +52,7 @@ public class ManualAnalyzer {
         verbsArray.add("search for ");
         verbsArray.add("fetch me ");
         verbsArray.add("find any ");
+        verbsArray.add("find an ");
         verbsArray.add("find every ");
         verbsArray.add("find all ");
         verbsArray.add("fetch us ");

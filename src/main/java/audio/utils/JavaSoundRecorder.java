@@ -1,7 +1,10 @@
 package audio.utils;
 
+import utils.Utils;
+
 import javax.sound.sampled.*;
 import java.io.*;
+import java.util.Properties;
 
 /**
  * A sample program is to demonstrate how to record sound in Java
@@ -18,7 +21,7 @@ public class JavaSoundRecorder {
     private static long RECORD_TIME = 10000;  // 1 minute
 
     // path of the wav file
-    File wavFile = new File("/Users/joakimnilfjord/Desktop/RecordAudio.wav");
+    File wavFile = null; //new File("/home/peter/RecordAudio.wav");
 
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
@@ -59,12 +62,12 @@ public class JavaSoundRecorder {
             AudioInputStream ais = new AudioInputStream(line);
             System.out.println("Start recording...");
             // start recording
+            Properties prop = Utils.readProperties();
+            wavFile = new File(prop.getProperty("audio.path"));
             AudioSystem.write(ais, fileType, wavFile);
 
-        } catch (LineUnavailableException ex) {
+        } catch (LineUnavailableException | IOException ex) {
             ex.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         }
     }
 

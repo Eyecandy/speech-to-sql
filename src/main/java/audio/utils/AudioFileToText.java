@@ -23,10 +23,13 @@ import com.google.cloud.speech.v1.SpeechClient;
 import com.google.cloud.speech.v1.SpeechRecognitionAlternative;
 import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import com.google.protobuf.ByteString;
+import utils.Utils;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 
 public class AudioFileToText {
     public static String convert() throws Exception {
@@ -35,7 +38,8 @@ public class AudioFileToText {
         SpeechClient speech = SpeechClient.create();
 
         // The path to the audio file to transcribe
-        String fileName = "/Users/joakimnilfjord/Desktop/RecordAudio.wav";
+        Properties prop = Utils.readProperties();
+        String fileName = prop.getProperty("audio.path");
 
         // Reads the audio file into memory
         Path path = Paths.get(fileName);

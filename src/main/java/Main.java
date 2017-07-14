@@ -3,10 +3,12 @@ import analyzers.ManualAnalyzer;
 import analyzers.NumberAnalyzer;
 import audio.utils.JavaSoundRecorder;
 import audio.utils.AudioFileToText;
+import database.DatabaseManager;
 import utils.RegEx;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 /**
  * Created by joakimnilfjord on 7/4/2017 AD.
@@ -16,6 +18,9 @@ public class Main {
         ManualAnalyzer manualAnalyze = new ManualAnalyzer();
         GoogleAnalyze googleAnalyze = new GoogleAnalyze();
         NumberAnalyzer numberAnalyzer = new NumberAnalyzer();
+
+        DatabaseManager databaseManager = new DatabaseManager();
+
         while (true) {
             manualAnalyze.resetResults();
             System.out.println("Type in 's' to start the voice recording or 't' to type in input");
@@ -25,17 +30,20 @@ public class Main {
             if (command.equals("s")){
                 JavaSoundRecorder.startRecording();
                 speech = AudioFileToText.convert();
-                getResult(speech,googleAnalyze,manualAnalyze,numberAnalyzer);
-            }
-            if (command.equals("t")) {
-                System.out.println("ask for something by typing...");
-                speech = sc.next();
-            }
-            else {
+            } else if (command.equals("t")) {
+                System.out.println("ask for something by typing...");speech = sc.next();
+
+            } else if (command.equals("q")) {
+                databaseManager.getDbConnection().getConnection().close();
+                return;
+            } else {
                 System.out.println("Invalid Command");
             }
             HashMap<String,String> result =getResult(speech, googleAnalyze, manualAnalyze, numberAnalyzer);
             System.out.println(strip(result));
+
+            //results = getResult(speech, googleAnalyze, manualAnalyze, numberAnalyzer);
+            databaseManager.search(strip(result));
 
 
 
@@ -54,8 +62,8 @@ public class Main {
         else if (RegEx.containsEmail(speech)) {
             System.out.println("manual analyzer");
             HashMap<String,String> result =manualAnalyzer.analyze(speech);
-            String n = googleAnalyze.analyzeSyntaxText2(result.get("show"));
-            result.put("show",n);
+            //String n = googleAnalyze.analyzeSyntaxText2(result.get("show"));
+            //result.put("obj",n);
             return result;
         }
         else {
